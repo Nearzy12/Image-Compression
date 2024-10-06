@@ -1,0 +1,57 @@
+int main() {
+    // Example test variables
+    struct PGM_Image input_pgm_image;
+
+    create_PGM_Image(&input_pgm_image, 10,1,5);
+
+    input_pgm_image.image[0][0] = 4;
+    input_pgm_image.image[0][1] = 0;
+    input_pgm_image.image[0][2] = 0;
+    input_pgm_image.image[0][3] = 4;
+    input_pgm_image.image[0][4] = 1;
+    input_pgm_image.image[0][5] = 5;
+    input_pgm_image.image[0][6] = 2;
+    input_pgm_image.image[0][7] = 0;
+    input_pgm_image.image[0][8] = 0;
+    input_pgm_image.image[0][9] = 3;
+
+    int number_of_nodes = 5; // Example number of nodes
+
+    long int length_of_encoded_image_array = 0;
+
+    // Create a temporary array of nodes
+    struct node *huffman_node = malloc(number_of_nodes * sizeof(struct node));
+    if (huffman_node == NULL) {
+        printf("Memory allocation failed\n");
+        return 1; // Return with an error code
+    }
+
+    // Initialize the nodes with some example data
+    huffman_node[0].left_value = 3;
+    huffman_node[0].right_value = 5; 
+
+    huffman_node[1].left_value = 1;
+    huffman_node[1].right_value = 3; 
+
+    huffman_node[2].left_value = 2;
+    huffman_node[2].right_value = 4; 
+
+    huffman_node[3].left_value = 1;
+    huffman_node[3].right_value = 2; 
+
+    huffman_node[4].left_value = 0;
+    huffman_node[4].right_value = 1; 
+
+    // Call huffman_encode_image function
+    unsigned char *encoded_image = huffman_encode_image(&input_pgm_image, huffman_node, number_of_nodes, &length_of_encoded_image_array);
+
+    // Print some information or perform further tests
+    print_encoded_image(encoded_image, length_of_encoded_image_array);
+
+    // Free dynamically allocated memory
+    free(encoded_image);
+    free(input_pgm_image.image); // Assuming you have dynamically allocated image data
+    free(huffman_node);
+
+    return 0;
+}
